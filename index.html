@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>WellnessConnect – Premium Massage Service</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1662010748275569');
+    fbq('init', '1461547928769031');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1662010748275569&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1461547928769031&ev=PageView&noscript=1"/>
+  </noscript>
   <style>
     :root {
       --gold: #c9a96e;
@@ -483,6 +502,15 @@
   }
 
   function openWA() {
+    // Lead event sirf button click pe — page load pe nahi
+    try {
+      fbq('track', 'Lead', {
+        content_name: 'Real Meet Service',
+        content_category: 'WhatsApp Booking',
+        currency: 'INR'
+      });
+    } catch(e) {}
+
     if (isMetaBrowser()) {
       // Show link inline so user can tap it from overlay
       const div = document.createElement('div');
