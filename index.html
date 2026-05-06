@@ -1,553 +1,502 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WellnessConnect – Premium Massage Service</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-
-  <!-- Meta Pixel -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1662010748275569');
-    fbq('init', '1461547928769031');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1662010748275569&ev=PageView&noscript=1"/>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1461547928769031&ev=PageView&noscript=1"/>
-  </noscript>
-  <style>
-    :root {
-      --gold: #c9a96e;
-      --gold-light: #e8d5a3;
-      --dark: #0a0f0d;
-      --dark2: #111a14;
-      --green: #1a3327;
-      --mint: #74c69d;
-      --text: #e8e0d0;
-      --muted: rgba(232,224,208,0.45);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--dark);
-      color: var(--text);
-      font-family: 'Outfit', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Noise texture overlay */
-    body::before {
-      content:'';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: 0.5;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 24px 60px;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    /* Radial glow background */
-    .hero::after {
-      content:'';
-      position: absolute;
-      top: -10%; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Decorative circles */
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(201,169,110,0.1);
-      pointer-events: none;
-    }
-    .c1 { width:300px; height:300px; top:-80px; right:-80px; }
-    .c2 { width:200px; height:200px; bottom:80px; left:-60px; border-color: rgba(116,198,157,0.08); }
-    .c3 { width:500px; height:500px; top:50%; left:50%; transform:translate(-50%,-50%); border-color: rgba(201,169,110,0.05); }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(201,169,110,0.1);
-      border: 1px solid rgba(201,169,110,0.3);
-      border-radius: 100px;
-      padding: 6px 18px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 28px;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s ease both;
-    }
-    .badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--mint);
-      animation: blink 2s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 9vw, 4.2rem);
-      font-weight: 700;
-      line-height: 1.05;
-      color: #fff;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.1s ease both;
-      margin-bottom: 8px;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .subtitle {
-      font-size: clamp(0.8rem, 2.5vw, 1rem);
-      color: var(--muted);
-      font-weight: 300;
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-      max-width: 320px;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.2s ease both;
-      margin-bottom: 40px;
-    }
-
-    /* Gold divider */
-    .divider {
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 0 auto 40px;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.25s ease both;
-    }
-
-    /* ── FEATURES ── */
-    .features {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 44px;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.3s ease both;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .feat {
-      display: flex; align-items: center; gap: 7px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 100px;
-      padding: 7px 14px;
-      font-size: 0.7rem;
-      color: var(--text);
-      font-weight: 400;
-    }
-    .feat-icon {
-      font-size: 0.85rem;
-    }
-
-    /* ── CTA BUTTON ── */
-    .cta-wrap {
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.4s ease both;
-      width: 100%;
-      max-width: 340px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .btn-wa {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%;
-      padding: 18px 28px;
-      background: linear-gradient(135deg, #25d366 0%, #128c4a 100%);
-      color: #fff;
-      border: none; border-radius: 16px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 1rem; font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 8px 32px rgba(37,211,102,0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-wa::before {
-      content:'';
-      position: absolute; top:0; left:-100%;
-      width:100%; height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-      transition: left 0.5s;
-    }
-    .btn-wa:hover::before { left: 100%; }
-    .btn-wa:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(37,211,102,0.25); }
-
-    .btn-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
-
-    .btn-sub {
-      margin-top: 10px;
-      font-size: 0.65rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    /* ── STATS ── */
-    .stats {
-      display: flex; gap: 0;
-      margin: 44px 0 0;
-      position: relative; z-index: 1;
-      animation: fadeUp 0.6s 0.5s ease both;
-      width: 100%; max-width: 340px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-    .stat {
-      flex: 1;
-      padding: 16px 8px;
-      text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.07);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--gold);
-      display: block;
-    }
-    .stat-label {
-      font-size: 0.58rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 2px;
-      display: block;
-    }
-
-    /* ── SERVICES SECTION ── */
-    .section {
-      padding: 60px 24px;
-      position: relative; z-index: 1;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 600;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      text-align: center;
-      line-height: 1.15;
-      margin-bottom: 32px;
-      color: #fff;
-    }
-    .section-title em { color: var(--gold); font-style: italic; }
-
-    .cards {
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
-      padding: 20px 18px;
-      display: flex; align-items: flex-start; gap: 14px;
-      transition: border-color 0.3s;
-    }
-    .card:hover { border-color: rgba(201,169,110,0.3); }
-    .card-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(201,169,110,0.1);
-      border: 1px solid rgba(201,169,110,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
-    .card-title {
-      font-size: 0.9rem; font-weight: 600;
-      color: #fff; margin-bottom: 4px;
-    }
-    .card-desc {
-      font-size: 0.72rem; color: var(--muted); line-height: 1.5;
-    }
-
-    /* ── BOTTOM CTA ── */
-    .bottom-cta {
-      padding: 48px 24px 60px;
-      text-align: center;
-      position: relative; z-index: 1;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .bottom-cta h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      color: #fff; margin-bottom: 10px; line-height: 1.2;
-    }
-    .bottom-cta h2 em { color: var(--gold); font-style: italic; }
-    .bottom-cta p {
-      font-size: 0.78rem; color: var(--muted); margin-bottom: 28px;
-      line-height: 1.6;
-    }
-
-    /* Telegram link */
-    .tg-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 20px;
-      background: rgba(0,136,204,0.12);
-      border: 1px solid rgba(0,136,204,0.3);
-      border-radius: 100px;
-      padding: 8px 20px;
-      font-size: 0.72rem; font-weight: 500;
-      color: #62c4e8;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .tg-link:hover { background: rgba(0,136,204,0.2); }
-    .tg-link svg { width: 16px; height: 16px; }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 24px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.2);
-      position: relative; z-index: 1;
-    }
-
-    /* Meta in-app browser warning */
-    #meta-warn {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-      background: #e85d04; color: #fff;
-      text-align: center; padding: 10px 16px;
-      font-size: 0.75rem; font-weight: 600; line-height: 1.4;
-    }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform: translateY(24px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-
-<div id="meta-warn">
-  ⚠️ WhatsApp open karne ke liye — upar ⋮ menu se <b>"Open in Browser"</b> tap karein
-</div>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="circle c1"></div>
-  <div class="circle c2"></div>
-  <div class="circle c3"></div>
-
-  <div class="badge">
-    <span class="badge-dot"></span>
-    Premium Service · Available Now
-  </div>
-
-  <h1>Real <em>Meet</em><br>Service</h1>
-  <p class="subtitle">Professional body massage & relaxation at your home or hotel. Discreet, trusted, premium.</p>
-
-  <div class="divider"></div>
-
-  <div class="features">
-    <div class="feat"><span class="feat-icon">💆</span> Body Massage</div>
-    <div class="feat"><span class="feat-icon">🏨</span> Home / Hotel</div>
-    <div class="feat"><span class="feat-icon">✨</span> Full Satisfaction</div>
-    <div class="feat"><span class="feat-icon">🇮🇳</span> Indian & Russian</div>
-  </div>
-
-  <div class="cta-wrap">
-    <button class="btn-wa" id="mainCTA" style="width:100%;">
-      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Confirm Appointment via WhatsApp
-    </button>
-    <a href="https://t.me/xkhushii" target="_blank" class="btn-wa" style="
-      width:100%;
-      background: linear-gradient(135deg, #229ed9 0%, #1a7db5 100%);
-      box-shadow: 0 8px 32px rgba(34,158,217,0.35);
-      text-decoration:none;
-    ">
-      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-      Confirm Appointment via Telegram
-    </a>
-    <p class="btn-sub">Free consultation · Instant reply</p>
-  </div>
-
-  <div class="stats">
-    <div class="stat">
-      <span class="stat-num">10K+</span>
-      <span class="stat-label">Clients</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">24/7</span>
-      <span class="stat-label">Available</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">100%</span>
-      <span class="stat-label">Discreet</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── SERVICES ── -->
-<section class="section">
-  <p class="section-label">What We Offer</p>
-  <h2 class="section-title">Premium <em>Services</em></h2>
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">🏠</div>
-      <div>
-        <div class="card-title">Home Visit</div>
-        <div class="card-desc">Professional therapist comes to your home. Fully equipped, hygienic & private session.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-icon">🏨</div>
-      <div>
-        <div class="card-title">Hotel Service</div>
-        <div class="card-desc">Discreet service at your hotel room. Available across Delhi, Jaipur & Surat.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-icon">👩</div>
-      <div>
-        <div class="card-title">Female Staff</div>
-        <div class="card-desc">Indian & Russian female therapists. Age 20–35 yrs. Professional & trained.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-icon">⭐</div>
-      <div>
-        <div class="card-title">Full Satisfaction</div>
-        <div class="card-desc">Premium experience guaranteed. 100% customer satisfaction, every single time.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── BOTTOM CTA ── -->
-<section class="bottom-cta">
-  <h2>Book Your<br><em>Session Now</em></h2>
-  <p>Ek message karo — hum turant reply karenge aur apki booking confirm karenge.</p>
-
-  <div style="width:100%;max-width:340px;margin:0 auto;display:flex;flex-direction:column;gap:10px;">
-    <button class="btn-wa" id="bottomCTA" style="width:100%;">
-      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Confirm Appointment via WhatsApp
-    </button>
-    <a href="https://t.me/xkhushii" target="_blank" class="btn-wa" style="
-      width:100%;
-      background: linear-gradient(135deg, #229ed9 0%, #1a7db5 100%);
-      box-shadow: 0 8px 32px rgba(34,158,217,0.35);
-      text-decoration:none;
-    ">
-      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-      Confirm Appointment via Telegram
-    </a>
-  </div>
-</section>
-
-<footer class="footer">
-  © 2025 WellnessConnect · Premium Massage Service · All Rights Reserved
-</footer>
-
-<script>
-  const WA_NUM = "919354185036";
-  const WA_MSG = encodeURIComponent("*REAL MEET SERVICE*");
-  const WA_URL = `https://wa.me/${WA_NUM}?text=${WA_MSG}`;
-
-  function isMetaBrowser() {
-    return /FBAN|FBAV|FB_IAB|Instagram|FB4A|FBIOS/.test(navigator.userAgent || '');
-  }
-
-  if (isMetaBrowser()) {
-    document.getElementById('meta-warn').style.display = 'block';
-  }
-
-  function openWA() {
-    // Lead event sirf button click pe — page load pe nahi
-    try {
-      fbq('track', 'Lead', {
-        content_name: 'Real Meet Service',
-        content_category: 'WhatsApp Booking',
-        currency: 'INR'
-      });
-    } catch(e) {}
-
-    if (isMetaBrowser()) {
-      // Show link inline so user can tap it from overlay
-      const div = document.createElement('div');
-      div.style.cssText = `
-        position:fixed;inset:0;z-index:9999;
-        background:rgba(0,0,0,0.88);
-        display:flex;flex-direction:column;align-items:center;justify-content:center;
-        gap:16px;padding:32px;text-align:center;
-      `;
-      div.innerHTML = `
-        <p style="color:#fff;font-size:1rem;line-height:1.6;font-family:'Outfit',sans-serif">
-          📲 WhatsApp open karne ke liye<br>neeche button tap karein
-        </p>
-        <a href="${WA_URL}" style="
-          display:inline-flex;align-items:center;gap:10px;
-          background:linear-gradient(135deg,#25d366,#128c4a);
-          color:#fff;padding:16px 32px;border-radius:16px;
-          font-family:'Outfit',sans-serif;font-weight:600;font-size:1rem;
-          text-decoration:none;
-        ">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp Open Karein
-        </a>
-        <button onclick="this.parentNode.remove()" style="
-          background:transparent;border:1px solid rgba(255,255,255,0.2);
-          color:rgba(255,255,255,0.5);padding:10px 24px;border-radius:50px;
-          cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.8rem;
-        ">Baad mein</button>
-      `;
-      document.body.appendChild(div);
-    } else {
-      window.location.href = WA_URL;
-    }
-  }
-
-  document.getElementById('mainCTA').addEventListener('click', openWA);
-  document.getElementById('bottomCTA').addEventListener('click', openWA);
-</script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WellnessConnect – Premium Massage Service</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1662010748275569');
+    fbq('init', '1461547928769031');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1662010748275569&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1461547928769031&ev=PageView&noscript=1"/>
+  </noscript>
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5a3;
+      --dark: #0a0f0d;
+      --dark2: #111a14;
+      --green: #1a3327;
+      --mint: #74c69d;
+      --text: #e8e0d0;
+      --muted: rgba(232,224,208,0.45);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content:'';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.5;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 24px 60px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Radial glow background */
+    .hero::after {
+      content:'';
+      position: absolute;
+      top: -10%; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Decorative circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.1);
+      pointer-events: none;
+    }
+    .c1 { width:300px; height:300px; top:-80px; right:-80px; }
+    .c2 { width:200px; height:200px; bottom:80px; left:-60px; border-color: rgba(116,198,157,0.08); }
+    .c3 { width:500px; height:500px; top:50%; left:50%; transform:translate(-50%,-50%); border-color: rgba(201,169,110,0.05); }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,169,110,0.1);
+      border: 1px solid rgba(201,169,110,0.3);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s ease both;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--mint);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 9vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: #fff;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.1s ease both;
+      margin-bottom: 8px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .subtitle {
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      max-width: 320px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.2s ease both;
+      margin-bottom: 40px;
+    }
+
+    /* Gold divider */
+    .divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 40px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.25s ease both;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 44px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.3s ease both;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .feat {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      padding: 7px 14px;
+      font-size: 0.7rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+    .feat-icon {
+      font-size: 0.85rem;
+    }
+
+    /* ── CTA BUTTON ── */
+    .cta-wrap {
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.4s ease both;
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%;
+      padding: 18px 28px;
+      background: linear-gradient(135deg, #25d366 0%, #128c4a 100%);
+      color: #fff;
+      border: none; border-radius: 16px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-wa::before {
+      content:'';
+      position: absolute; top:0; left:-100%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s;
+    }
+    .btn-wa:hover::before { left: 100%; }
+    .btn-wa:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(37,211,102,0.25); }
+
+    .btn-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+    .btn-sub {
+      margin-top: 10px;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; gap: 0;
+      margin: 44px 0 0;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.5s ease both;
+      width: 100%; max-width: 340px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .stat {
+      flex: 1;
+      padding: 16px 8px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.58rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ── SERVICES SECTION ── */
+    .section {
+      padding: 60px 24px;
+      position: relative; z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      text-align: center;
+      line-height: 1.15;
+      margin-bottom: 32px;
+      color: #fff;
+    }
+    .section-title em { color: var(--gold); font-style: italic; }
+
+    .cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 20px 18px;
+      display: flex; align-items: flex-start; gap: 14px;
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: rgba(201,169,110,0.3); }
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(201,169,110,0.1);
+      border: 1px solid rgba(201,169,110,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .card-title {
+      font-size: 0.9rem; font-weight: 600;
+      color: #fff; margin-bottom: 4px;
+    }
+    .card-desc {
+      font-size: 0.72rem; color: var(--muted); line-height: 1.5;
+    }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta {
+      padding: 48px 24px 60px;
+      text-align: center;
+      position: relative; z-index: 1;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .bottom-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      color: #fff; margin-bottom: 10px; line-height: 1.2;
+    }
+    .bottom-cta h2 em { color: var(--gold); font-style: italic; }
+    .bottom-cta p {
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* Telegram link */
+    .tg-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 20px;
+      background: rgba(0,136,204,0.12);
+      border: 1px solid rgba(0,136,204,0.3);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 0.72rem; font-weight: 500;
+      color: #62c4e8;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .tg-link:hover { background: rgba(0,136,204,0.2); }
+    .tg-link svg { width: 16px; height: 16px; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.2);
+      position: relative; z-index: 1;
+    }
+
+    /* Meta in-app browser warning - removed */
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(24px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="circle c1"></div>
+  <div class="circle c2"></div>
+  <div class="circle c3"></div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Premium Service · Available Now
+  </div>
+
+  <h1>Real <em>Meet</em><br>Service</h1>
+  <p class="subtitle">Professional body massage & relaxation at your home or hotel. Discreet, trusted, premium.</p>
+
+  <div class="divider"></div>
+
+  <div class="features">
+    <div class="feat"><span class="feat-icon">💆</span> Body Massage</div>
+    <div class="feat"><span class="feat-icon">🏨</span> Home / Hotel</div>
+    <div class="feat"><span class="feat-icon">✨</span> Full Satisfaction</div>
+    <div class="feat"><span class="feat-icon">🇮🇳</span> Indian & Russian</div>
+  </div>
+
+  <div class="cta-wrap">
+    <button class="btn-wa" id="mainCTA" style="width:100%;">
+      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Confirm Appointment via WhatsApp
+    </button>
+    <a href="https://t.me/xkhushii" target="_blank" class="btn-wa" style="
+      width:100%;
+      background: linear-gradient(135deg, #229ed9 0%, #1a7db5 100%);
+      box-shadow: 0 8px 32px rgba(34,158,217,0.35);
+      text-decoration:none;
+    ">
+      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Confirm Appointment via Telegram
+    </a>
+    <p class="btn-sub">Free consultation · Instant reply</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">10K+</span>
+      <span class="stat-label">Clients</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">24/7</span>
+      <span class="stat-label">Available</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Discreet</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="section">
+  <p class="section-label">What We Offer</p>
+  <h2 class="section-title">Premium <em>Services</em></h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🏠</div>
+      <div>
+        <div class="card-title">Home Visit</div>
+        <div class="card-desc">Professional therapist comes to your home. Fully equipped, hygienic & private session.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏨</div>
+      <div>
+        <div class="card-title">Hotel Service</div>
+        <div class="card-desc">Discreet service at your hotel room. Available across Delhi, Jaipur & Surat.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">👩</div>
+      <div>
+        <div class="card-title">Female Staff</div>
+        <div class="card-desc">Indian & Russian female therapists. Age 20–35 yrs. Professional & trained.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⭐</div>
+      <div>
+        <div class="card-title">Full Satisfaction</div>
+        <div class="card-desc">Premium experience guaranteed. 100% customer satisfaction, every single time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOTTOM CTA ── -->
+<section class="bottom-cta">
+  <h2>Book Your<br><em>Session Now</em></h2>
+  <p>Ek message karo — hum turant reply karenge aur apki booking confirm karenge.</p>
+
+  <div style="width:100%;max-width:340px;margin:0 auto;display:flex;flex-direction:column;gap:10px;">
+    <button class="btn-wa" id="bottomCTA" style="width:100%;">
+      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Confirm Appointment via WhatsApp
+    </button>
+    <a href="https://t.me/xkhushii" target="_blank" class="btn-wa" style="
+      width:100%;
+      background: linear-gradient(135deg, #229ed9 0%, #1a7db5 100%);
+      box-shadow: 0 8px 32px rgba(34,158,217,0.35);
+      text-decoration:none;
+    ">
+      <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;flex-shrink:0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Confirm Appointment via Telegram
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2025 WellnessConnect · Premium Massage Service · All Rights Reserved
+</footer>
+
+<script>
+  const WA_NUM = "919354185036";
+  const WA_MSG = encodeURIComponent("*REAL MEET SERVICE*");
+  const WA_URL = `https://wa.me/${WA_NUM}?text=${WA_MSG}`;
+
+  function openWA() {
+    try {
+      fbq('track', 'Lead', {
+        content_name: 'Real Meet Service',
+        content_category: 'WhatsApp Booking',
+        currency: 'INR'
+      });
+    } catch(e) {}
+    window.open(WA_URL, '_blank');
+  }
+
+  document.getElementById('mainCTA').addEventListener('click', openWA);
+  document.getElementById('bottomCTA').addEventListener('click', openWA);
+</script>
+</body>
+</html>
